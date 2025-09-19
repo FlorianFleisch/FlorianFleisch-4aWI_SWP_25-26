@@ -2,13 +2,13 @@
 
 namespace Datastructure
 {
-    public class SimpleLinkedList
+    public class SimpleLinkedList<T>
     {
-        private Node? head;
+        public Node<T>? head { get; private set; }
 
-        public void Add(int value)
+        public void Add(T value)
         {
-            Node newNode = new Node(value);
+            Node<T> newNode = new Node<T>(value);
 
             if (head == null)
             {
@@ -16,7 +16,7 @@ namespace Datastructure
             }
             else
             {
-                Node current = head;
+                Node<T> current = head;
                 while (current.next != null)
                 {
                     current = current.next;
@@ -24,15 +24,30 @@ namespace Datastructure
                 current.next = newNode;
             }
         }
-
-        public void PrintAll()
+        public List<T> GetAllNodes()
         {
-            Node? current = head;
+            Node<T>? current = head;
+            List<T> Final_Data = new();
             while (current != null)
             {
-                Console.WriteLine(current.data);
+                Final_Data.Add(current.data);
                 current = current.next;
             }
+            return Final_Data;  
+        }
+
+        public Node<T>? ContainsData(T Data)
+        {
+            Node<T> current = head;
+            while (current.next != null)
+            {
+                if (current.data.Equals(Data))
+                {
+                    return current;
+                }
+                current = current.next;
+            }
+            return null;
         }
     }
 }
