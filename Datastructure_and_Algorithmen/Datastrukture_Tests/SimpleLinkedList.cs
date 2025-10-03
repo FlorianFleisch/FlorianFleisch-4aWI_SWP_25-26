@@ -56,12 +56,16 @@ namespace Datastructure.Tests
             var list = new SimpleLinkedList<string>();
             list.Add("Felix");
             list.Add("Max");
-
+            int? pos = list.Position("Max");
             list.InsertAfter("Felix", "Anna");
 
             var nodes = list.GetAllNodes();
 
-            CollectionAssert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            Assert.Multiple(() =>
+            {
+                Assert.AreNotEqual(pos, list.Position("Max"));
+                Assert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            });
         }
 
         [Test]
@@ -70,12 +74,29 @@ namespace Datastructure.Tests
             var list = new SimpleLinkedList<string>();
             list.Add("Felix");
             list.Add("Max");
-
+            int? pos = list.Position("Max");
             list.InsertBefore("Max", "Anna");
 
             var nodes = list.GetAllNodes();
 
-            CollectionAssert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            Assert.Multiple(() =>
+            {
+                Assert.AreNotEqual(pos, list.Position("Max"));
+                Assert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            });
+        }
+
+        [Test]
+        public void Position_ElementInMiddle_ReturnsCorrectIndex()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("A");
+            list.Add("B");
+            list.Add("C");
+
+            var result = list.Position("B");
+
+            Assert.AreEqual(1, result);
         }
     }
 }

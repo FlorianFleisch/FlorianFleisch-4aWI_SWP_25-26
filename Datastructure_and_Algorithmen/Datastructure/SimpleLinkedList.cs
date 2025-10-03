@@ -96,5 +96,21 @@ namespace Datastructure
             }
             return null;
         }
+
+        public int? Position(T element)
+        {
+            int position = 0;
+            Node<T>? current = head;
+            while (current != null)
+            {
+                if (current.data.Equals(element))
+                {
+                    return position;
+                }
+                position = position + 1;
+                current = current.next;
+            }
+            return null;
+        }
     }
 }
