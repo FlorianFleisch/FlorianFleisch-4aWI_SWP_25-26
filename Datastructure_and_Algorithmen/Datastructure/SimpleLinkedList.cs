@@ -9,7 +9,7 @@ namespace Datastructure
         public void InsertAfter(T elementBefore, T elementToInsert)
         {
             Node<T>? before = GetNode(elementBefore);
-            
+
             if (before != null)
             {
                 Node<T> newNode = new Node<T>(elementToInsert);
@@ -21,7 +21,12 @@ namespace Datastructure
         public void InsertBefore(T elementAfter, T elementToInsert)
         {
             Node<T>? before = GetNodeBefore(elementAfter);
-
+            if (head.data.Equals(elementAfter))
+            {
+                Node<T> node = new Node<T>(elementToInsert); 
+                node.next = head;
+                head = node;
+            }
             if (before != null)
             {
                 Node<T> newNode = new Node<T>(elementToInsert);
