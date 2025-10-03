@@ -21,5 +21,82 @@ namespace Datastructure.Tests
             list.Add(person);
             Assert.That(list.GetAllNodes(), Is.EqualTo((new List<Person> { person, person })));
         }
+
+        [Test]
+        public void GetNode_ReturnsCorrectNode_WhenElementExists()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("Felix");
+            list.Add("Max");
+            list.Add("Anna");
+
+            var node = list.GetNode("Max");
+
+            Assert.IsNotNull(node);
+            Assert.AreEqual("Max", node.data);
+        }
+
+        [Test]
+        public void GetNodeBefore_ReturnsCorrectNode_WhenElementExists()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("Felix");
+            list.Add("Max");
+            list.Add("Anna");
+
+            var nodeBefore = list.GetNodeBefore("Anna");
+
+            Assert.IsNotNull(nodeBefore);
+            Assert.AreEqual("Max", nodeBefore.data);
+        }
+
+        [Test]
+        public void InsertAfter_AddsElementDirectlyAfterGivenElement()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("Felix");
+            list.Add("Max");
+            int? pos = list.Position("Max");
+            list.InsertAfter("Felix", "Anna");
+
+            var nodes = list.GetAllNodes();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreNotEqual(pos, list.Position("Max"));
+                Assert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            });
+        }
+
+        [Test]
+        public void InsertBefore_AddsElementDirectlyBeforeGivenElement()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("Felix");
+            list.Add("Max");
+            int? pos = list.Position("Max");
+            list.InsertBefore("Max", "Anna");
+
+            var nodes = list.GetAllNodes();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreNotEqual(pos, list.Position("Max"));
+                Assert.AreEqual(new List<string> { "Felix", "Anna", "Max" }, nodes);
+            });
+        }
+
+        [Test]
+        public void Position_ElementInMiddle_ReturnsCorrectIndex()
+        {
+            var list = new SimpleLinkedList<string>();
+            list.Add("A");
+            list.Add("B");
+            list.Add("C");
+
+            var result = list.Position("B");
+
+            Assert.AreEqual(1, result);
+        }
     }
 }
