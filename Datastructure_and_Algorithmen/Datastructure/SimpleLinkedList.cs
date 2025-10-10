@@ -6,6 +6,34 @@ namespace Datastructure
     {
         public Node<T>? head { get; private set; }
 
+        public void InsertAfter(T elementBefore, T elementToInsert)
+        {
+            Node<T>? before = GetNode(elementBefore);
+
+            if (before != null)
+            {
+                Node<T> newNode = new Node<T>(elementToInsert);
+                newNode.next = before.next;
+                before.next = newNode;
+            }
+        }
+
+        public void InsertBefore(T elementAfter, T elementToInsert)
+        {
+            Node<T>? before = GetNodeBefore(elementAfter);
+            if (head.data.Equals(elementAfter))
+            {
+                Node<T> node = new Node<T>(elementToInsert); 
+                node.next = head;
+                head = node;
+            }
+            if (before != null)
+            {
+                Node<T> newNode = new Node<T>(elementToInsert);
+                newNode.next = before.next;
+                before.next = newNode;
+            }
+        }
         public void Add(T value)
         {
             Node<T> newNode = new Node<T>(value);
@@ -23,6 +51,30 @@ namespace Datastructure
                 }
                 current.next = newNode;
             }
+        }
+
+        public Node<T>? GetNode(T toFind)
+        {
+            Node<T>? current = head;
+            while (current != null)
+            {
+                if (current.data.Equals(toFind))
+                    return current;
+                current = current.next;
+            }
+            return null;
+        }
+
+        public Node<T>? GetNodeBefore(T toFind)
+        {
+            Node<T>? current = head;
+            while (current != null)
+            {
+                if (current.next.data.Equals(toFind))
+                    return current;
+                current = current.next;
+            }
+            return null;
         }
         public List<T> GetAllNodes()
         {
@@ -45,6 +97,22 @@ namespace Datastructure
                 {
                     return current;
                 }
+                current = current.next;
+            }
+            return null;
+        }
+
+        public int? Position(T element)
+        {
+            int position = 0;
+            Node<T>? current = head;
+            while (current != null)
+            {
+                if (current.data.Equals(element))
+                {
+                    return position;
+                }
+                position = position + 1;
                 current = current.next;
             }
             return null;
