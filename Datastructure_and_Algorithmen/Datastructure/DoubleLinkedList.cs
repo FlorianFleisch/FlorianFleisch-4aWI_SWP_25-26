@@ -4,13 +4,12 @@ namespace Datastructure
 {
     public class DoubleLinkedList<T>
     {
-        private NodeDouble<T>? _Head;
-        private NodeDouble<T>? _Tail;
-
+        private Node<T>? _Head;
+        private Node<T>? _Tail;
 
         public void AddFirst(T value)
         {
-            NodeDouble<T> newNode = new(value);
+            Node<T> newNode = new(value);
             if (_Head == null)
             {
                 _Head = newNode;
@@ -20,11 +19,9 @@ namespace Datastructure
             _Head = newNode;
         }
 
-
-
         public void AddLast(T value)
         {
-            NodeDouble<T> newNode = new(value);
+            Node<T> newNode = new(value);
 
             if (_Tail == null)
                 _Head = _Tail = newNode;
@@ -37,12 +34,12 @@ namespace Datastructure
             _Tail = newNode;
         }
 
-        public NodeDouble<T>? GetNode(T toFind)
+        public Node<T>? GetNode(T toFind)
         {
-            NodeDouble<T>? current = _Head;
+            Node<T>? current = _Head;
             while (current != null)
             {
-                if (current.data.Equals(toFind))
+                if (current.data != null && current.data.Equals(toFind))
                     return current;
                 current = current.nodeafter;
             }
@@ -52,7 +49,7 @@ namespace Datastructure
         public List<T> GetAllNodes()
         {
             List<T> result = new();
-            NodeDouble<T>? current = _Tail;
+            Node<T>? current = _Tail;
             while (current != null)
             {
                 result.Add(current.data);
@@ -61,7 +58,7 @@ namespace Datastructure
             return result;
         }
 
-        public NodeDouble<T>? ContainsData(T Data)
+        public Node<T>? ContainsData(T Data)
         {
             return GetNode(Data);
         }
@@ -69,14 +66,14 @@ namespace Datastructure
         public int? Position(T element)
         {
             int position = 0;
-            NodeDouble<T>? current = _Head;
+            Node<T>? current = _Head;
             while (current != null)
             {
-                if (current.data.Equals(element))
+                if (current.data != null && current.data.Equals(element))
                 {
                     return position;
                 }
-                position = position + 1;
+                position++;
                 current = current.nodeafter;
             }
             return null;

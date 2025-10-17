@@ -39,6 +39,17 @@ namespace LinkedListTests
         }
 
         [Test]
+        public void GetNode_DataIsNull_Crashes()
+        {
+            var list = new DoubleLinkedList<string>();
+            list.AddLast(null);
+            var node = list.GetNode("A");
+            Assert.That(node, Is.Not.Null);
+            Assert.That(node!.data, Is.EqualTo("B"));
+        }
+
+
+        [Test]
         public void Position_ReturnsCorrectIndex()
         {
             var list = new DoubleLinkedList<string>();
