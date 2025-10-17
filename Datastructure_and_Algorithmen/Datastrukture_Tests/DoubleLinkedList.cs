@@ -4,12 +4,12 @@ using Datastructure;
 namespace LinkedListTests
 {
     [TestFixture]
-    public class SimpleLinkedListTests
+    public class DoubleLinkedList
     {
         [Test]
         public void AddFirst_AddsElementAtHead()
         {
-            var list = new SimpleLinkedList<int>();
+            var list = new DoubleLinkedList<int>();
             list.AddFirst(1);
             list.AddFirst(2);
             var nodes = list.GetAllNodes();
@@ -19,7 +19,7 @@ namespace LinkedListTests
         [Test]
         public void AddLast_AddsElementAtEnd()
         {
-            var list = new SimpleLinkedList<int>();
+            var list = new DoubleLinkedList<int>();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -30,7 +30,7 @@ namespace LinkedListTests
         [Test]
         public void GetNode_ReturnsCorrectNode()
         {
-            var list = new SimpleLinkedList<string>();
+            var list = new DoubleLinkedList<string>();
             list.AddLast("A");
             list.AddLast("B");
             var node = list.GetNode("B");
@@ -39,9 +39,20 @@ namespace LinkedListTests
         }
 
         [Test]
+        public void GetNode_DataIsNull_Crashes()
+        {
+            var list = new DoubleLinkedList<string>();
+            list.AddLast(null);
+            var node = list.GetNode("A");
+            Assert.That(node, Is.Not.Null);
+            Assert.That(node!.data, Is.EqualTo("B"));
+        }
+
+
+        [Test]
         public void Position_ReturnsCorrectIndex()
         {
-            var list = new SimpleLinkedList<string>();
+            var list = new DoubleLinkedList<string>();
             list.AddLast("A");
             list.AddLast("B");
             list.AddLast("C");
