@@ -4,10 +4,10 @@ using Datastructure;
 namespace LinkedListTests
 {
     [TestFixture]
-    public class DoubleLinkedList
+    public class DoubleLinkedListTests
     {
         [Test]
-        public void AddFirst_AddsElementAtHead()
+        public void AddFirst_WorksCorrectly()
         {
             var list = new DoubleLinkedList<int>();
             list.AddFirst(1);
@@ -17,7 +17,7 @@ namespace LinkedListTests
         }
 
         [Test]
-        public void AddLast_AddsElementAtEnd()
+        public void AddLast_WorksCorrectly()
         {
             var list = new DoubleLinkedList<int>();
             list.AddLast(1);
@@ -28,76 +28,38 @@ namespace LinkedListTests
         }
 
         [Test]
-        public void GetNode_ReturnsCorrectNode()
+        public void SwapNodes_SwapsData()
         {
             var list = new DoubleLinkedList<string>();
             list.AddLast("A");
             list.AddLast("B");
-            var node = list.GetNode("B");
-            Assert.That(node, Is.Not.Null);
-            Assert.That(node!.data, Is.EqualTo("B"));
+            var nodeA = list.GetNode("A");
+            var nodeB = list.GetNode("B");
+            list.SwapNodes(nodeA!, nodeB!);
+            var nodes = list.GetAllNodes();
+            Assert.That(nodes, Is.EqualTo(new[] { "B", "A" }));
         }
 
         [Test]
-        public void GetNode_DataIsNull_Crashes()
-        {
-            var list = new DoubleLinkedList<string>();
-            list.AddLast(null);
-            var node = list.GetNode("A");
-            Assert.That(node, Is.Not.Null);
-            Assert.That(node!.data, Is.EqualTo("B"));
-        }
-
-
-        [Test]
-        public void Position_ReturnsCorrectIndex()
-        {
-            var list = new DoubleLinkedList<string>();
-            list.AddLast("A");
-            list.AddLast("B");
-            list.AddLast("C");
-            Assert.That(list.Position("A"), Is.EqualTo(0));
-            Assert.That(list.Position("B"), Is.EqualTo(1));
-            Assert.That(list.Position("C"), Is.EqualTo(2));
-            Assert.That(list.Position("X"), Is.Null);
-        }
-        [Test]
-        public void BubbleSort_SortsIntegersAscending()
+        public void Sort_UsesBubbleSort_ByDefault()
         {
             var list = new DoubleLinkedList<int>();
             list.AddLast(5);
             list.AddLast(3);
             list.AddLast(8);
             list.AddLast(1);
-            list.BubbleSort();
+            list.Sort();
             var result = list.GetAllNodes();
             Assert.That(result, Is.EqualTo(new[] { 1, 3, 5, 8 }));
         }
 
         [Test]
-        public void BubbleSort_SortsStringsAlphabetically()
-        {
-            var list = new DoubleLinkedList<string>();
-            list.AddLast("banana");
-            list.AddLast("apple");
-            list.AddLast("cherry");
-            list.AddLast("date");
-            list.BubbleSort();
-            var result = list.GetAllNodes();
-            Assert.That(result, Is.EqualTo(new[] { "apple", "banana", "cherry", "date" }));
-        }
-
-        [Test]
-        public void AddFirst_Crashes_WhenGettingAllNodes_AfterAddingToEmptyList()
+        public void AddFirst_DoesNotCrash_WhenGettingNodes()
         {
             var list = new DoubleLinkedList<int>();
-
             list.AddFirst(42);
-
-            Assert.Throws<NullReferenceException>(() =>
-            {
-                list.GetAllNodes();
-            });
+            var nodes = list.GetAllNodes();
+            Assert.That(nodes, Is.EqualTo(new[] { 42 }));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Common;
+using System.Collections.Generic;
 
 namespace Datastructure
 {
@@ -7,25 +8,46 @@ namespace Datastructure
         private Node<T>? _Head;
         private Node<T>? _Tail;
 
+        public Node<T>? Head => _Head;
+
+        private ISortStrategy<T> _sortStrategy = new BubbleSortStrategy<T>();
+
+        public void SetSortStrategy(ISortStrategy<T> strategy)
+        {
+            _sortStrategy = strategy;
+        }
+
+        public void Sort()
+        {
+            _sortStrategy.Sort(this);
+        }
+
+        public void SwapNodes(Node<T> node1, Node<T> node2)
+        {
+            if (node1 == node2 || node1 == null || node2 == null) return;
+            T temp = node1.data;
+            node1.data = node2.data;
+            node2.data = temp;
+        }
+
         public void AddFirst(T value)
         {
             Node<T> newNode = new(value);
             if (_Head == null)
             {
-                _Head = newNode;
+                _Head = _Tail = newNode;
             }
             else
             {
-                _Head.nodebefore = newNode;
                 newNode.nodeafter = _Head;
+                _Head.nodebefore = newNode;
                 _Head = newNode;
             }
         }
 
         public void AddLast(T value)
         {
-            Node<T> newNode = new Node<T>(value);
-
+            Node<T> newNode = new(value);
             if (_Tail == null)
                 _Head = _Tail = newNode;
             else
@@ -80,35 +102,6 @@ namespace Datastructure
                 current = current.nodeafter;
             }
             return null;
-        }
-
-        public void SwapNodes(Node<T> node1, Node<T> node2)
-        {
-            if (node1 == node2 || node1 == null || node2 == null) return;
-
-            T temp = node1.data;
-            node1.data = node2.data;
-            node2.data = temp;
-        }
-        public void BubbleSort()
-        {
-            if (_Head == null) return;
-
-            bool swapped;
-            do
-            {
-                swapped = false;
-                Node<T> current = _Head;
-                while (current.nodeafter != null)
-                {
-                    if (Comparer<T>.Default.Compare(current.data, current.nodeafter.data) > 0)
-                    {
-                        SwapNodes(current, current.nodeafter);  
-                        swapped = true;
-                    }
-                    current = current.nodeafter;
-                }
-            } while (swapped);
         }
     }
 }
