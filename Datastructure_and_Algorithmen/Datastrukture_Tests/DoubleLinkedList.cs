@@ -61,5 +61,43 @@ namespace LinkedListTests
             Assert.That(list.Position("C"), Is.EqualTo(2));
             Assert.That(list.Position("X"), Is.Null);
         }
+        [Test]
+        public void BubbleSort_SortsIntegersAscending()
+        {
+            var list = new DoubleLinkedList<int>();
+            list.AddLast(5);
+            list.AddLast(3);
+            list.AddLast(8);
+            list.AddLast(1);
+            list.BubbleSort();
+            var result = list.GetAllNodes();
+            Assert.That(result, Is.EqualTo(new[] { 1, 3, 5, 8 }));
+        }
+
+        [Test]
+        public void BubbleSort_SortsStringsAlphabetically()
+        {
+            var list = new DoubleLinkedList<string>();
+            list.AddLast("banana");
+            list.AddLast("apple");
+            list.AddLast("cherry");
+            list.AddLast("date");
+            list.BubbleSort();
+            var result = list.GetAllNodes();
+            Assert.That(result, Is.EqualTo(new[] { "apple", "banana", "cherry", "date" }));
+        }
+
+        [Test]
+        public void AddFirst_Crashes_WhenGettingAllNodes_AfterAddingToEmptyList()
+        {
+            var list = new DoubleLinkedList<int>();
+
+            list.AddFirst(42);
+
+            Assert.Throws<NullReferenceException>(() =>
+            {
+                list.GetAllNodes();
+            });
+        }
     }
 }
