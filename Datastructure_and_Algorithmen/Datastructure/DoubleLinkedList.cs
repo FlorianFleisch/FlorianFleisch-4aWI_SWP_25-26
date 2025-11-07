@@ -14,14 +14,17 @@ namespace Datastructure
             {
                 _Head = newNode;
             }
-            _Head.nodebefore = newNode;
-            newNode.nodeafter = _Head;
-            _Head = newNode;
+            else
+            {
+                _Head.nodebefore = newNode;
+                newNode.nodeafter = _Head;
+                _Head = newNode;
+            }
         }
 
         public void AddLast(T value)
         {
-            Node<T> newNode = new(value);
+            Node<T> newNode = new Node<T>(value);
 
             if (_Tail == null)
                 _Head = _Tail = newNode;
@@ -79,6 +82,14 @@ namespace Datastructure
             return null;
         }
 
+        public void SwapNodes(Node<T> node1, Node<T> node2)
+        {
+            if (node1 == node2 || node1 == null || node2 == null) return;
+
+            T temp = node1.data;
+            node1.data = node2.data;
+            node2.data = temp;
+        }
         public void BubbleSort()
         {
             if (_Head == null) return;
@@ -92,9 +103,7 @@ namespace Datastructure
                 {
                     if (Comparer<T>.Default.Compare(current.data, current.nodeafter.data) > 0)
                     {
-                        T temp = current.data;
-                        current.data = current.nodeafter.data;
-                        current.nodeafter.data = temp;
+                        SwapNodes(current, current.nodeafter);  
                         swapped = true;
                     }
                     current = current.nodeafter;

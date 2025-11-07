@@ -6,7 +6,7 @@
         public Node<T>? nodeafter;
         public Node<T>? nodebefore;
 
-        public Node(T data)
+        public Node(T data) 
         {
             this.data = data;
         }

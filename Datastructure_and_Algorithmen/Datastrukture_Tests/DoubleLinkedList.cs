@@ -86,5 +86,18 @@ namespace LinkedListTests
             var result = list.GetAllNodes();
             Assert.That(result, Is.EqualTo(new[] { "apple", "banana", "cherry", "date" }));
         }
+
+        [Test]
+        public void AddFirst_Crashes_WhenGettingAllNodes_AfterAddingToEmptyList()
+        {
+            var list = new DoubleLinkedList<int>();
+
+            list.AddFirst(42);
+
+            Assert.Throws<NullReferenceException>(() =>
+            {
+                list.GetAllNodes();
+            });
+        }
     }
 }
