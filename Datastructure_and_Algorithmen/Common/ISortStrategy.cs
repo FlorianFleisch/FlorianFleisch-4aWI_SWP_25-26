@@ -1,7 +1,9 @@
-﻿namespace Datastructure
+﻿using System;
+
+namespace Common
 {
-    public interface ISortStrategy<T>
+    public interface ISortStrategy<T> where T : IComparable<T>
     {
-        void Sort(T list);
+        void Sort(ISortableCollection<T> collection);
     }
 }

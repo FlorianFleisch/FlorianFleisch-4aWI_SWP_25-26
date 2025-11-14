@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datastructure", "Datastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datastrukture_Tests", "Datastrukture_Tests\Datastrukture_Tests.csproj", "{75E82BC8-0C6B-4F60-8A76-B887C7F1C204}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingAlgorithms", "SortingAlgorithms\SortingAlgorithms.csproj", "{805CCA79-1A54-4327-9491-6A9FDACCC7A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{75E82BC8-0C6B-4F60-8A76-B887C7F1C204}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E82BC8-0C6B-4F60-8A76-B887C7F1C204}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E82BC8-0C6B-4F60-8A76-B887C7F1C204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805CCA79-1A54-4327-9491-6A9FDACCC7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805CCA79-1A54-4327-9491-6A9FDACCC7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805CCA79-1A54-4327-9491-6A9FDACCC7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805CCA79-1A54-4327-9491-6A9FDACCC7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
