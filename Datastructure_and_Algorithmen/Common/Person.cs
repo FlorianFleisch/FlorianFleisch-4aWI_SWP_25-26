@@ -1,4 +1,4 @@
-﻿public class Person : IComparable
+﻿public class Person : IComparable<Person>
 {
     private string _Firstname;
     public string Firstname { get { return _Firstname; } }
@@ -50,7 +50,8 @@
 
     public int CompareTo(Person? other)
     {
-        if (other == null) return 1;
+        if (other == null ) return 1;
+        if (other == this) return 0;
 
         int lastNameCompare = String.Compare(this.Lastname, other.Lastname, StringComparison.Ordinal);
         if (lastNameCompare != 0)
