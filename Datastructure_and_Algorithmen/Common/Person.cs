@@ -1,4 +1,4 @@
-﻿public class Person
+﻿public class Person : IComparable<Person>
 {
     private string _Firstname;
     public string Firstname { get { return _Firstname; } }
@@ -13,15 +13,15 @@
         }
     }
 
-    public enum Genders 
+    public enum Genders
     {
-        m = 0, 
+        m = 0,
         w = 1,
         d = 2
     }
     private Genders _Gender;
     public Genders Gender { get { return _Gender; } }
-    
+
     public Person(string firstname, string lastname, Genders gender, DateTime birthdate)
     {
         _Firstname = firstname;
@@ -47,4 +47,16 @@
     }
 
     protected Person() { }
+
+    public int CompareTo(Person? other)
+    {
+        if (other == null ) return 1;
+        if (other == this) return 0;
+
+        int lastNameCompare = String.Compare(this.Lastname, other.Lastname, StringComparison.Ordinal);
+        if (lastNameCompare != 0)
+            return lastNameCompare;
+
+        return String.Compare(this.Firstname, other.Firstname, StringComparison.Ordinal);
+    }
 }

@@ -1,114 +1,106 @@
 ﻿using Common;
+using SortingAlgorithms;
 
 namespace Datastructure
 {
-    public class DoubleLinkedList<T>
+    public class DoubleLinkedList<T> : ISortableCollection<T> where T : IComparable<T>
     {
         private Node<T>? _Head;
         private Node<T>? _Tail;
+        private int _Count;
+
+        private ISortStrategy<T> _Strategy = new BubbleSortStrategy<T>();
+
+        public void SetSortStrategy(ISortStrategy<T> strategy)
+        {
+            _Strategy = strategy;
+        }
+
+        public void Sort()
+        {
+            _Strategy.Sort(this);
+        }
+
+        public int Count()
+        {
+            return _Count;
+        }
+
+        public T Get(int index)
+        {
+            int i = 0;
+            var current = _Head;
+
+            while (current != null)
+            {
+                if (i == index)
+                    return current.data;
+
+                i++;
+                current = current.nodeafter;
+            }
+
+            throw new IndexOutOfRangeException();
+        }
+
+        public void Swap(int indexA, int indexB)
+        {
+            if (indexA == indexB)
+                return;
+
+            Node<T>? a = _Head;
+            Node<T>? b = _Head;
+
+            int i = 0;
+            while (a != null && i < indexA)
+            {
+                a = a.nodeafter;
+                i++;
+            }
+
+            i = 0;
+            while (b != null && i < indexB)
+            {
+                b = b.nodeafter;
+                i++;
+            }
+
+            if (a == null || b == null)
+                throw new IndexOutOfRangeException();
+
+            T temp = a.data;
+            a.data = b.data;
+            b.data = temp;
+        }
 
         public void AddFirst(T value)
         {
             Node<T> newNode = new(value);
+
             if (_Head == null)
             {
-                _Head = newNode;
+                _Head = _Tail = newNode;
+                return;
             }
-            else
-            {
-                _Head.nodebefore = newNode;
-                newNode.nodeafter = _Head;
-                _Head = newNode;
-            }
+
+            newNode.nodeafter = _Head;
+            _Head.nodebefore = newNode;
+            _Head = newNode;
         }
 
         public void AddLast(T value)
         {
-            Node<T> newNode = new Node<T>(value);
+            Node<T> newNode = new(value);
 
             if (_Tail == null)
+            {
                 _Head = _Tail = newNode;
-            else
-            {
-                _Tail.nodeafter = newNode;
-                newNode.nodebefore = _Tail;
-                _Tail = newNode;
+                return;
             }
+
+            _Tail.nodeafter = newNode;
+            newNode.nodebefore = _Tail;
             _Tail = newNode;
-        }
-
-        public Node<T>? GetNode(T toFind)
-        {
-            Node<T>? current = _Head;
-            while (current != null)
-            {
-                if (current.data != null && current.data.Equals(toFind))
-                    return current;
-                current = current.nodeafter;
-            }
-            return null;
-        }
-
-        public List<T> GetAllNodes()
-        {
-            List<T> result = new();
-            Node<T>? current = _Tail;
-            while (current != null)
-            {
-                result.Add(current.data);
-                current = current.nodebefore;
-            }
-            return result;
-        }
-
-        public Node<T>? ContainsData(T Data)
-        {
-            return GetNode(Data);
-        }
-
-        public int? Position(T element)
-        {
-            int position = 0;
-            Node<T>? current = _Head;
-            while (current != null)
-            {
-                if (current.data != null && current.data.Equals(element))
-                {
-                    return position;
-                }
-                position++;
-                current = current.nodeafter;
-            }
-            return null;
-        }
-
-        public void SwapNodes(Node<T> node1, Node<T> node2)
-        {
-            if (node1 == node2 || node1 == null || node2 == null) return;
-
-            T temp = node1.data;
-            node1.data = node2.data;
-            node2.data = temp;
-        }
-        public void BubbleSort()
-        {
-            if (_Head == null) return;
-
-            bool swapped;
-            do
-            {
-                swapped = false;
-                Node<T> current = _Head;
-                while (current.nodeafter != null)
-                {
-                    if (Comparer<T>.Default.Compare(current.data, current.nodeafter.data) > 0)
-                    {
-                        SwapNodes(current, current.nodeafter);  
-                        swapped = true;
-                    }
-                    current = current.nodeafter;
-                }
-            } while (swapped);
         }
     }
 }
