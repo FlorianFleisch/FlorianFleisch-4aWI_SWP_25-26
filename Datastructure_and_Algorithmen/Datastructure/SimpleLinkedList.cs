@@ -5,6 +5,7 @@ namespace Datastructure
     public class SimpleLinkedList<T>
     {
         public Node<T>? head { get; private set; }
+        private int _Count;
 
         public void InsertAfter(T elementBefore, T elementToInsert)
         {
@@ -15,6 +16,7 @@ namespace Datastructure
                 Node<T> newNode = new Node<T>(elementToInsert);
                 newNode.nodeafter = before.nodeafter;
                 before.nodeafter = newNode;
+                _Count++;
             }
         }
 
@@ -26,12 +28,14 @@ namespace Datastructure
                 Node<T> node = new Node<T>(elementToInsert);
                 node.nodeafter = head;
                 head = node;
+                _Count++;
             }
             if (before != null)
             {
                 Node<T> newNode = new Node<T>(elementToInsert);
                 newNode.nodeafter = before.nodeafter;
                 before.nodeafter = newNode;
+                _Count++;
             }
         }
         public void Add(T value)
@@ -51,6 +55,7 @@ namespace Datastructure
                 }
                 current.nodeafter = newNode;
             }
+            _Count++;
         }
 
         public Node<T>? GetNode(T toFind)
@@ -116,6 +121,26 @@ namespace Datastructure
                 current = current.nodeafter;
             }
             return null;
+        }
+
+        public int Count() => _Count;
+      
+        public T GetFirst()
+        {
+            if (head == null)
+                throw new InvalidOperationException("Head is Null here");
+            return head.data;
+
+
+        }
+
+        public void RemoveFirst()
+        {
+            if (head == null)
+                return;
+
+            head = head.nodeafter;
+            _Count--;
         }
     }
 }
