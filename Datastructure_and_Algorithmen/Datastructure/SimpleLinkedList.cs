@@ -1,4 +1,5 @@
 ﻿using Common;
+using System.Threading;
 
 namespace Datastructure
 {
@@ -89,8 +90,7 @@ namespace Datastructure
             {
                 Final_Data.Add(current.data);
                 current = current.nodeafter;
-            }
-            return Final_Data;
+            }            return Final_Data;
         }
 
         public Node<T>? ContainsData(T Data)
@@ -130,8 +130,6 @@ namespace Datastructure
             if (head == null)
                 throw new InvalidOperationException("Head is Null here");
             return head.data;
-
-
         }
 
         public void RemoveFirst()
@@ -141,6 +139,14 @@ namespace Datastructure
 
             head = head.nodeafter;
             _Count--;
+        }
+
+        public void AddFirst(T data)
+        {
+            Node<T> toAdd = new(data);
+            toAdd.nodeafter = head;
+            head = toAdd;
+            _Count++;
         }
     }
 }
