@@ -6,7 +6,7 @@
 
         public void Push(T item)
         {
-            list.Add(item);
+            list.AddFirst(item);
         }
 
         public T Pop()
