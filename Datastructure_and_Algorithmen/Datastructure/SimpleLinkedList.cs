@@ -93,18 +93,16 @@ namespace Datastructure
             }            return Final_Data;
         }
 
-        public Node<T>? ContainsData(T Data)
+        public bool Contains(T data) 
         {
-            Node<T> current = head;
-            while (current.nodeafter != null)
+            Node<T>? current = head;
+            while (current != null)
             {
-                if (current.data.Equals(Data))
-                {
-                    return current;
-                }
+                if (current.data.Equals(data))
+                    return true;
                 current = current.nodeafter;
             }
-            return null;
+            return false;
         }
 
         public int? Position(T element)
