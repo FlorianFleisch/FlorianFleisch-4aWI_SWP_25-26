@@ -101,19 +101,49 @@ namespace Datastructure
             return GetNodeByIndex(index);
         }
 
-        public IEnumerable<Node<T>> GetAllNodes()
+        public T[] GetAllNodes()
         {
+            T[] values = new T[_count];
             Node<T>? current = _head;
+            int index = 0;
+
             while (current != null)
             {
-                yield return current;
+                values[index] = current.Value;
                 current = current.Next;
+                index++;
             }
+
+            return values;
         }
 
         public void SwapNodes(int indexA, int indexB)
         {
             Swap(indexA, indexB);
+        }
+
+        public void SwapNodes(Node<T> nodeA, Node<T> nodeB)
+        {
+            if (nodeA == null || nodeB == null) throw new ArgumentNullException();
+            if (ReferenceEquals(nodeA, nodeB)) return;
+
+            (nodeA.Value, nodeB.Value) = (nodeB.Value, nodeA.Value);
+        }
+
+        public Node<T>? GetNode(T value)
+        {
+            Node<T>? current = _head;
+            while (current != null)
+            {
+                if (EqualityComparer<T>.Default.Equals(current.Value, value))
+                {
+                    return current;
+                }
+
+                current = current.Next;
+            }
+
+            return null;
         }
 
         private Node<T>? GetNodeByIndex(int index)
