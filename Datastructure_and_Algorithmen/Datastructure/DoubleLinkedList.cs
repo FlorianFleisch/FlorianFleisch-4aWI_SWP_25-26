@@ -9,11 +9,16 @@ namespace Datastructure
         private Node<T>? _Tail;
         private int _Count;
 
-        private ISortStrategy<T> _SortStrategy = new BubbleSortStrategy<T>();
+        private ISortStrategy<T> _SortStrategy = SortStrategyFactory.Create<T>(SortStrategyType.Bubble);
 
         public void SetSortStrategy(ISortStrategy<T> strategy)
         {
             _SortStrategy = strategy;
+        }
+
+        public void SetSortStrategy(SortStrategyType strategyType)
+        {
+            _SortStrategy = SortStrategyFactory.Create<T>(strategyType);
         }
 
         public void Sort()
