@@ -2,8 +2,9 @@
 using Datastructure;
 using Common;
 using System;
+using System.Collections.Generic;
 
-namespace LinkedListTests
+namespace SortingAlgorithms
 {
     [TestFixture]
     public class BubbleSortStrategyTests
@@ -16,9 +17,7 @@ namespace LinkedListTests
             list.AddLast(3);
             list.AddLast(8);
             list.AddLast(1);
-
             list.Sort();
-
             var result = ToArray(list);
             Assert.That(result, Is.EqualTo(new[] { 1, 3, 5, 8 }));
         }
@@ -27,9 +26,7 @@ namespace LinkedListTests
         public void BubbleSort_Sorts_EmptyList_WithoutError()
         {
             var list = new DoubleLinkedList<int>();
-
             list.Sort();
-
             var result = ToArray(list);
             Assert.That(result, Is.Empty);
         }
@@ -43,7 +40,6 @@ namespace LinkedListTests
 
             var strategy = new FakeStrategy<int>();
             list.SetSortStrategy(strategy);
-
             list.Sort();
 
             Assert.That(strategy.WasCalled, Is.True);
@@ -54,8 +50,8 @@ namespace LinkedListTests
         {
             var data = new[] { 4, 2, 7, 1 };
             var collection = new FakeCollection<int>(data);
-            var strategy = new BubbleSortStrategy<int>();
 
+            var strategy = new BubbleSortStrategy<int>();
             strategy.Sort(collection);
 
             Assert.That(collection.Data, Is.EqualTo(new[] { 1, 2, 4, 7 }));
@@ -63,9 +59,11 @@ namespace LinkedListTests
 
         private static T[] ToArray<T>(ISortableCollection<T> collection) where T : IComparable<T>
         {
-            var result = new T[collection.Count];
-            for (int i = 0; i < collection.Count; i++)
+            var result = new T[collection.Count()]; 
+            for (int i = 0; i < collection.Count(); i++) 
+            {
                 result[i] = collection.Get(i);
+            }
             return result;
         }
 
@@ -85,10 +83,12 @@ namespace LinkedListTests
 
             public FakeCollection(T[] data)
             {
-                Data = data;
+                Data = (T[])data.Clone(); 
             }
-
-            public int Count => Data.Length;
+            public int Count()
+            {
+                return Data.Length;
+            }
 
             public T Get(int index)
             {
@@ -97,7 +97,7 @@ namespace LinkedListTests
 
             public void Swap(int indexA, int indexB)
             {
-                var temp = Data[indexA];
+                T temp = Data[indexA];
                 Data[indexA] = Data[indexB];
                 Data[indexB] = temp;
             }
